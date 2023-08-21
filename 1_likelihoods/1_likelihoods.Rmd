@@ -356,7 +356,7 @@ How to go from here to get a likelihood?
 
 <br/><br/><br/><br/><br/>
 
-One approach: let $n_0$ be the number of zeroes in the data and $m = n - n_0$ be the numbe rof non-zero $Y_i$. This leads to an intuitive way to contruct the likelihood for iid $Y_1, \dots, Y_n$ distributed according to the above distribution:
+One approach: let $n_0$ be the number of zeroes in the data and $m = n - n_0$ be the number of non-zero $Y_i$. This leads to an intuitive way to contruct the likelihood for iid $Y_1, \dots, Y_n$ distributed according to the above distribution:
 $$
 L(\boldsymbol \theta | \boldsymbol Y) = \lim\limits_{h \rightarrow 0^+} \left(\frac{1}{2h}\right)^m \prod\limits_{i = 1}^n\{F_Y(Y_i + h; p, \boldsymbol \theta) - F_Y(Y_i - h; p, \boldsymbol \theta)\}
 $$
@@ -368,7 +368,7 @@ Feels a little arbitrary in how we are defining different weights on our likelih
 
 Turns out, it doesn't matter! (Need some STAT 630/720 to see why.)
 
-**Definition (Absolute Continuity)** On $(\mathbb{X}, \mathcal{M})$, a finitely additive set function $\phi$ is absolutely continuous with respect to a measure $\mu$ is $\phi(A) = 0$ for each $A \in \mathcal{M}$ with $\mu(A) = 0$. We also say $\phi$ is dominated by $\mu$ and write $\phi \ll \mu$. If $\nu$ and $\mu$ are measures such that $\nu \ll \mu$ and $\mu \ll nu$ then $\mu$ and $\nu$ are equivalent.
+**Definition (Absolute Continuity)** On $(\mathbb{X}, \mathcal{M})$, a finitely additive set function $\phi$ is *absolutely continuous* with respect to a measure $\mu$ if $\phi(A) = 0$ for each $A \in \mathcal{M}$ with $\mu(A) = 0$. We also say $\phi$ is *dominated* by $\mu$ and write $\phi \ll \mu$. If $\nu$ and $\mu$ are measures such that $\nu \ll \mu$ and $\mu \ll nu$ then $\mu$ and $\nu$ are *equivalent*.
 
 <br/><br/><br/><br/>
 
@@ -380,7 +380,7 @@ If $g$ is another such function, then $f = g$ a.e. wrt $\mu$. If $\phi \ll \mu$ 
 
 <br/>
 
-**Definition (Radon-Nikodym Derivative)** $\phi = \phi_{ac} + \phi_s$ is called the Lebesgue decomposition. If $\phi \ll \mu$, then the density function $f$ is called the Radon-Nikodym derivative of $\phi$ wrt $\mu$.
+**Definition (Radon-Nikodym Derivative)** $\phi = \phi_{ac} + \phi_s$ is called the *Lebesgue decomposition*. If $\phi \ll \mu$, then the density function $f$ is called the *Radon-Nikodym derivative* of $\phi$ wrt $\mu$.
 
 <br/>
 
@@ -394,13 +394,151 @@ So what?
 
 ### Proportional Likelihoods
 
+Likelihoods are equivalent for point estimation as long as they are proportional and the constant of proportionality does not depend on unknown parameters.
 
+Why?
+
+Consider if $Y_i, i = 1, \dots, n$ are iid continuous with density $f_Y(y ; \boldsymbol \theta)$ and $X_i = g(Y_i)$ where $g$ is increasing and continuously differentiable. Because $g$ is one-to-one, we can construct $Y_i$ from $X_i$ and vice versa.
+
+<br/><br/><br/><br/>
+
+More formally, the density of $X_i$ is $f_X(x; \boldsymbol \theta) = f_Y(h(x); \boldsymbol \theta) h'(x)$, where $h = g^{-1}$, and
+$$
+L(\boldsymbol \theta | \boldsymbol X) = \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad
+$$
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+**Example (Likelihood Principle):** Consider data from two different sampling plans:
+
+    $$
+    L_1(p | \boldsymbol Y) = {12 \choose S} p^S (1 - p)^{12 - S}, \text{ where } S = \sum\limits_{i = 1}^n Y_i
+    $$
+2. A negative binomial experiment, i.e. run the experiment until three zeroes are obtained.
+    $$
+    L_2(p | \boldsymbol Y) = {S + 2 \choose S} p^S (1 - p)^3.
+    $$
+The ratio of these likelihoods is
+$$
+\frac{L_1(p | \boldsymbol Y)}{L_2(p | \boldsymbol Y)} = \qquad \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+$$
+
+Suppose $S = 9$. Is all inference equivalent for these likelihoods? Debatable.
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+**The likelihood principle** states all the information about $\boldsymbol \theta$ from an experiment is contained in the actual observation $\boldsymbol y$. Two likelihood functions for $\boldsymbol \theta$ (from the same or different experiments) contain the same information about $\boldsymbol \theta$ is they are proportional.
 
 ### Empirical Distribution Function as MLE {.page-break-before}
 
-### Censored Data
+Recall the empirical cdf:
 
-## Likelihood for Regression Models
+Suppose $y_{(1)} \le y_{(2)} \le \cdots \le y_{(n)}$ are the order statistics of an iid sample from an unknown distribution function $F_Y$. Our goal is to estimate $F_Y$.
+
+$$
+\hat{F}_Y(y) = \frac{1}{n} \sum\limits_{i = 1}^n \mathbb{I}(y \ge y_{(i)})
+$$
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+Is this a "good" estimator of $F_Y$?
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+Yes, because it's MLE.
+
+Suppose $Y_1, \dots, Y_n$ are iid with distribution function $F(y)$. Here $F(y)$ is the unknown parameter.
+
+<br/><br/><br/><br/><br/><br/><br/>
+
+An approximate likelihood for $F$ is
+
+$$
+L_h(F | \boldsymbol Y) = \prod\limits_{i = 1}^n \{F(Y_i + h) - F(Y_i - h)\}
+$$
+
+### Censored Data {.page-break-before}
+
+Censored data occur when the value is only partially known. This is different from *truncation*, in which the data does not include any values below (or above) a certain limit. 
+
+For example, we might sample only hourseholds that have an income above a limit, $L_0$. If all incomes have distribution $F(x; \boldsymbol \theta)$, then for $y > L_0$,
+
+<br/>
+$$
+P(Y_1 \le y | Y_1 > L_0) = \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad 
+$$
+<br/>
+The likelihood is then
+
+<br/><br/><br/><br/><br/><br/><br/>
+
+#### Type I Censoring
+
+Suppose a random variable $X$ is normally distributed with mean $\mu$ and variance $\sigma^2$, but whenever $X \le 0$, all we observe is that it is less than or equal to $0$. If the sample is set to $0$ in the censored cases, then define
+$$
+Y = \begin{cases}
+0 & \text{ if } X \le 0 \\
+X & \text{ if } X > 0.
+\end{cases}
+$$
+The distribution function of $Y$ is
+
+<br/><br/><br/><br/><br/><br/><br/>
+
+Suppose we have a sample $Y_1, \dots, Y_n$ and let $n_0$ be the number of sample values that are $0$. Then $m = n - n_0$ and
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+We might have censoring on the left at $L_0$ and censoring on the right at $R_0$, but observe all values of $X$ between $L_0$ and $R_0$. Suppose $X$ has density $f(x; \boldsymbol \theta)$ and distribution function $F(x; \boldsymbol \theta)$ and
+$$
+Y_i = \begin{cases}
+L_0 & \text{ if } X_i \le L_0 \\
+X_i & \text{ if } L_0 < X_i < R_0 \\
+R_0 & \text{ if } X_i \ge R_0 \\
+\end{cases}
+$$
+
+If we let $n_L$ and $n_R$ be the number of $X_i$ values $\le L_0$ and $\ge R_0$ then the likelihood of the observed data $Y_1, \dots, Y_n$ is
+
+<br/><br/><br/><br/><br/><br/>
+
+We could also let each $X_i$ be subject to its own censoring values $L_i$ and $R_i$. For the special case of right censoring, define $Y_i = \min(X_i, R_i)$. In addition, define $\delta_i = \mathbb{I}(X_i \le R_i)$. Then the likelihood can be written as
+
+<br/><br/><br/><br/><br/>
+
+**Example (Equipment failure times):** Pieces of equipment are regularly checked for failure (but started at different times). By a fixed date (when the study ended), three of the items had not failed and therefore were censored.
+
+```{r, echo=FALSE}
+failure <- data.frame(y = c(2, 72, 51, 50, 33, 27, 14, 24, 4, 21),
+                      delta = c(1, 0, 1, 0, 1, 1, 1, 1, 1, 0))
+
+failure |>
+  t() |>
+  kable()
+```
+Suppose failure times follow an exponential distribution $F(x; \sigma) = 1 - \exp(-x/\sigma), x \ge 0$. Then
+$$
+L(\sigma|\boldsymbol Y) = \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+$$
+
+#### Random Censoring {.page-break-before}
+
+So far we have considered censoring times to be fixed. This is not required.
+
+<br/><br/><br/><br/>
+
+This leads to random censoring times, e.g. $R_i$, where we assume that the censoring times are independent of $X_1, \dots, X_n$ and iid with distribution function $G(t)$ nd density $g(t)$.
+
+Let's consider the contributions to the likelihood:
+
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+which results in
+
+$$
+L(\boldsymbol \theta | \boldsymbol Y, \boldsymbol \delta) = \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+$$
+
+## Likelihood for Regression Models {.page-break-before}
 
 ## Marginal and Conditional Likelihoods
 
