@@ -111,7 +111,7 @@ data.frame(Parameter = c("$p$", "$\\mu_{11}$", "$\\mu_{12}$", "$\\Sigma_{111}$",
 
 ## Your turn: fit the EM algorithm to the observed data y
 #starting values for parameters
-mu1_em <- c(0, -1) # wrong
+mu1_em <- c(-0.5, -0.5) # wrong
 mu2_em <- c(2, 2) # wrong
 sig1_em <- matrix(c(2, 0, 0, 2), nrow = 2) # wrong
 sig2_em <- matrix(c(1.5, 0, 0, 2), nrow = 2) # wrong
@@ -119,8 +119,8 @@ p_em <- .5 # wrong
 
 expand.grid(y1 = seq(-5, 5, by = .1), y2 = seq(-5, 5, by = .1)) |>
   rowwise() |>
-  mutate(dens1 = hat_p * dmvnorm(c(y1, y2), mean = mu1_em, sigma = sig1_em),
-         dens2 = (1 - hat_p) * dmvnorm(c(y1, y2), mean = mu2_em, sigma = sig2_em),
+  mutate(dens1 = p_em * dmvnorm(c(y1, y2), mean = mu1_em, sigma = sig1_em),
+         dens2 = (1 - p_em) * dmvnorm(c(y1, y2), mean = mu2_em, sigma = sig2_em),
          dens_mix = dens1 + dens2) -> plot_dens
 
 ggplot() +
@@ -132,7 +132,7 @@ ggplot() +
   scale_color_manual(values = c("blue", "red")) +
   theme(legend.position = "none")
 
-for(i in seq(1, 20)) {
+for(i in seq(1, 100)) {
   # E
   w1 <- p_em * dmvnorm(y, mean = mu1_em, sigma = sig1_em)
   w2 <- (1 - p_em) * dmvnorm(y, mean = mu2_em, sigma = sig2_em)
