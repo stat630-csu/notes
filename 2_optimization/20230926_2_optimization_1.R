@@ -158,7 +158,7 @@ expand.grid(y1 = seq(-5, 5, by = .1), y2 = seq(-5, 5, by = .1)) |>
 ggplot() +
   geom_contour(aes(y1, y2, z = dens1), colour = "red", data = plot_dens) +
   geom_contour(aes(y1, y2, z = dens2), colour = "blue", data = plot_dens) +
-  geom_point(aes(X1, X2, colour = as.character(z)), data = df) +
+  geom_point(aes(X1, X2, shape = as.character(z), colour = as.factor(w > 0.5)), data = df) +
   geom_point(aes(mu1_em[1], mu1_em[2]), shape = 2, colour = "red") +
   geom_point(aes(mu2_em[1], mu2_em[2]), shape = 2, colour = "blue") +
   scale_color_manual(values = c("blue", "red")) +
