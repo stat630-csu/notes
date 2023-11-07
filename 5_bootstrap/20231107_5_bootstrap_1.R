@@ -147,4 +147,7 @@ sd(diff_means.boot$t)
 
 ## -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Your turn: get the chosen CI using boot.ci
-boot.ci(diff_means.boot, type = "bca", conf = .99, )
+boot.ci(diff_means.boot, type = "bca", conf = .99)
+
+## actually to get a one-sided CI for this, seems like we would need to write our 
+## own version based on the formula in the notes from today
