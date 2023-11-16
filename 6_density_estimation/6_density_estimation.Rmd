@@ -111,6 +111,8 @@ Simple (plug-in) approach: Assume $f$ is a $N(\mu, \sigma^2)$, then
 
 <br/><br/><br/><br/><br/><br/><br/><br/>
 
+[]{.pagebreak}
+
 Data driven approach:
 
 
